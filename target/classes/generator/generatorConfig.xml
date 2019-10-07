@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <!--targetRuntime="MyBatis3Simple"是为了避免生成与Example相关的代码，若需要生成则设置为MyBatis3
+        flat使每个表只生成一个实体类
+    -->
+    <context id="MySqlContext" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="‘"/>
+        <property name="endingDelimiter" value="‘"/>
+        <!--注释器-->
+        <commentGenerator>
+            <!-- suppressAllComments：是否去除自动生成的注释 true：是 ： false:否，默认false -->
+            <!-- suppressDate:阻止生成的注释包含时间戳 默认false-->
+            <property name="suppressDate" value="true"/>
+            <!-- addRemarkComments：注释是否添加数据库表的备注信息 默认false -->
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/mybatis"
+                        userId="root"
+                        password="123456">
+
+        </jdbcConnection>
+
+        <!-- 实体类生成位置的配制 -->
+        <javaModelGenerator targetPackage="test.model"
+                            targetProject="src\main\java">
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- Mapper.xml文件的位置 -->
+        <sqlMapGenerator targetPackage="test.xml"
+                         targetProject="src\main\resources"></sqlMapGenerator>
+
+        <!-- Mapper接口的位置 -->
+        <javaClientGenerator type="XMLMAPPER"
+                             targetPackage="test.dao"
+                             targetProject="src\main\java">
+
+        </javaClientGenerator>
+
+        <!--%通配符匹配数据库中所有的表-->
+        <table tableName="%">
+            <generatedKey column="id" sqlStatement="MySql"/>
+        </table>
+    </context>
+
+</generatorConfiguration>

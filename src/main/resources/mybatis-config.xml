@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0 //EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--指定使用LOG4J输出日志-->
+        <setting name="logImpl" value="LOG4J"/>
+        <!--驼峰命名法的配制，配制完成后，就不需要在Mapper.xml里写列与属性的对应关系了，直接写列名，可以自动转属性-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 懒加载配制 -->
+        <!-- 启用延迟加载特性，不配置默认关闭该特性-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!-- 按需加载: false:使用关联属性，及时加载;    true,加载对象，则加载所有属性， -->
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <!-- 可以阻挡不相干的操作触发，实现懒加载 -->
+        <setting name="lazyLoadTriggerMethods"  value=""/>
+
+        <!-- 二级缓存 more为true-->
+    <!--  <setting name="cacheEnabled" value="true"></setting>-->
+ </settings>
+ <!--下面配置了一个包的别名，通常确定一个类的时候需要使用类的全限定名称，例如 mapper.mybatis.simple.model.CountryOld。在 MyBatis 中需要频繁用到类的全限定名称，为了方便使用，配置了 mapper.mybatis.simple.model包， 这样配置后，在使用类的时候不需要写包名的部分，只使用 Couηtry 即可。 -->
+    <typeAliases>
+        <package name="zxl.mybatis.simple.model"/>
+    </typeAliases>
+    <!--
+    <typeHandlers>
+        <typeHandler javaType="zxl.mybatis.simple.type.Enabled"
+                     handler="org.apache.ibatis.type.EnumOrdinalTypeHandler"/>
+    </typeHandlers>
+
+    -->
+    <typeHandlers>
+        <typeHandler javaType="zxl.mybatis.simple.type.Enabled"
+                     handler="zxl.mybatis.simple.type.EnabledTypeHandler"/>
+    </typeHandlers>
+    <!--配制数据库连接-->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC">
+                <property name="" value=""/>
+            </transactionManager>
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!--配制mapper，这是mybatis的sql语句和映射配制文件-->
+    <mappers>
+        <!-- 直接匹配resources目录下的xml文件，不需要接口，单独使用 -->
+        <!-- <mapper resource="zxl/mybatis/simple/mapper/*.xml"/>-->
+        <!-- 会去找java目录下的zxl.mybatis.simple.mapper所有接口，若包不存在则报错；包存在则加载接口对应XML文件，将接口全限定名转换为路径，zxl.mybatis.simple.mapper.UserMapper转换为zxl/mybatis/simple/mapper/UserMapper.xml -->
+         <package name="zxl.mybatis.simple.mapper"></package>
+    </mappers>
+
+</configuration>
