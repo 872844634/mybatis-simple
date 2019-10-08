@@ -1,0 +1,2 @@
+#mybatis示例
+本项目中包含了Mybatis中各种常见的用法，是一个用于学习Mybaits的最好项目
